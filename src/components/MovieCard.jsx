@@ -1,4 +1,9 @@
+import {useWatchlist} from "../contexts/MovieContext.jsx";
+
 function MovieCard({ movie,favorites,setFavorites }) {
+    let {addToWatchlist, removeFromWatchlist, isOnWatchlist} = useWatchlist()
+
+
   return (
     <div className="movie-card">
       <div className="movie-poster">
@@ -13,10 +18,16 @@ function MovieCard({ movie,favorites,setFavorites }) {
           <span className="movie-rating">⭐ {movie.vote_average}</span>
           <span className="movie-year">{movie.release_date.substring(0, 4)}</span>
         </div>
-          {!favorites.some(favMovie => (favMovie.id === movie.id)) ?
-              <button className="favorite-button" onClick={() => setFavorites([...favorites, movie])}>♡ Add to Favorites</button>:
-              <button className="favorite-button" onClick={() => setFavorites(favorites.filter((favMovie) => favMovie.id !== movie.id))}>Remove from Favorites</button>
-          }
+          <div className="buttons">
+              {!favorites.some(favMovie => (favMovie.id === movie.id)) ?
+                  <button className="favorite-button" onClick={() => setFavorites([...favorites, movie])}>♡ Add to Favorites</button>:
+                  <button className="favorite-button" onClick={() => setFavorites(favorites.filter((favMovie) => favMovie.id !== movie.id))}>Remove from Favorites</button>
+              }
+              {!isOnWatchlist(movie.id) ?
+                  <button className="favorite-button" onClick={() => addToWatchlist(movie)}>Add to Watchlist</button>:
+                  <button className="favorite-button" onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
+              }
+          </div>
 
       </div>
     </div>
