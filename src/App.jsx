@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import './App.css';
 import {useEffect, useState} from "react";
+import {WatchlistProvider} from "./contexts/MovieContext.jsx";
+import {Watchlist} from "./pages/Watchlist.jsx";
 
 function App() {
 
@@ -21,15 +23,18 @@ function App() {
 
 
     return (
-    <Router>
-      <div className="app">
-        <Header setSearchResults={setSearchResults} />
-        <Routes>
-          <Route path="/" element={<Home results={searchResults} favorites={favorites} setFavorites={setFavorites}/>} />
-          <Route path="/favorites" element={<Favorites favorites={favorites} setFavorites={setFavorites} />} />
-        </Routes>
-      </div>
-    </Router>
+    <WatchlistProvider>
+        <Router>
+            <div className="app">
+                <Header setSearchResults={setSearchResults} />
+                <Routes>
+                    <Route path="/" element={<Home results={searchResults} favorites={favorites} setFavorites={setFavorites}/>} />
+                    <Route path="/favorites" element={<Favorites favorites={favorites} setFavorites={setFavorites} />} />
+                    <Route path="/watchlist" element={<Watchlist favorites={favorites} setFavorites={setFavorites} />} />
+                </Routes>
+            </div>
+        </Router>
+    </WatchlistProvider>
   );
 };
 
